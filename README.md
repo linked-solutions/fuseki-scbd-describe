@@ -14,6 +14,12 @@ The resulting jar will be in the `target` folder.
 
 Start Fuseki as follows:
 
+On Unix/Linux:
+
+    java -cp "fuseki-server.jar:fuseki-scdb-describe-1.0.0-SNAPSHOT.jar" org.apache.jena.fuseki.cmd.FusekiCmd
+
+On Windows:
+
     java -cp "fuseki-server.jar;fuseki-scdb-describe-1.0.0-SNAPSHOT.jar" org.apache.jena.fuseki.cmd.FusekiCmd
 
 ## Example
