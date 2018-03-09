@@ -21,6 +21,8 @@ On Unix/Linux:
 On Windows:
 
     java -cp "fuseki-server.jar;fuseki-scdb-describe-1.0.0-SNAPSHOT.jar" org.apache.jena.fuseki.cmd.FusekiCmd
+    
+Alternatively you can also use the fuseki Docker image mantained in [this](https://github.com/linked-solutions/jena-docker/tree/master/jena-fuseki) repository.
 
 ## Example
 
