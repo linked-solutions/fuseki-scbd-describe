@@ -18,7 +18,6 @@ public class ScbdDescribeHandlerFactory implements DescribeHandlerFactory {
     Logger log = Logger.getLogger("DESCRIBE");
 	@Override
 	public DescribeHandler create() {
-        log.severe("creating");
 		return new DescribeHandler(){
         
             private Set<RDFNode> expanded = new HashSet<>();
@@ -26,13 +25,11 @@ public class ScbdDescribeHandlerFactory implements DescribeHandlerFactory {
 
             @Override
             public void start(Model accumulateResultModel, Context qContext) {
-                log.severe("started");
                 this.accumulateResultModel = accumulateResultModel;
             }
         
             @Override
             public void finish() {
-                log.severe("finished");
                 this.accumulateResultModel = null;
             }
         
@@ -45,10 +42,10 @@ public class ScbdDescribeHandlerFactory implements DescribeHandlerFactory {
                 Model model = rdfNode.getModel();
                 if (rdfNode.isResource()) { 
                     StmtIterator iterator = model.listStatements(rdfNode.asResource(), null, (RDFNode) null);
-                    accumulateResultModel.add(iterator);
                     while (iterator.hasNext()) {
                         //resurse on bnode objects
                         Statement stmt = iterator.next();
+                        accumulateResultModel.add(stmt);
                         RDFNode obj = stmt.getObject();
                         if (obj.isAnon()) {
                             expand(obj);
@@ -58,9 +55,9 @@ public class ScbdDescribeHandlerFactory implements DescribeHandlerFactory {
                 }
                 {
                     StmtIterator iterator = model.listStatements(null, null, rdfNode);
-                    accumulateResultModel.add(iterator);
                     while (iterator.hasNext()) {                    
                         Statement stmt = iterator.next();
+                        accumulateResultModel.add(stmt);
                         RDFNode subj = stmt.getSubject();
                         if (subj.isAnon()) {
                             expand(subj);
@@ -73,9 +70,7 @@ public class ScbdDescribeHandlerFactory implements DescribeHandlerFactory {
 
             @Override
             public void describe(Resource resource) {
-                log.severe("describe "+resource);
                 expand(resource);
-                
             }
         };
 	}
