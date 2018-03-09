@@ -24,6 +24,8 @@ On Windows:
     
 Alternatively you can also use the fuseki Docker image mantained in [this](https://github.com/linked-solutions/jena-docker/tree/master/jena-fuseki) repository.
 
+    docker run -p 3030:3030 linkedsolutions/fuseki
+
 ## Example
 
 This shows an answer retunred by fuseki when using this handler. Note how the resource is recusively expanded in both direction
