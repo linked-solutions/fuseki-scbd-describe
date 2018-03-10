@@ -11,14 +11,12 @@ public class Lifecycle implements JenaSubsystemLifecycle {
 
     @Override
     public void start() {
-        System.out.println("Starting lifecycle");
-        log.severe("starting");
+        log.info("starting SCBD DESCRIBE Handler");
         DescribeHandlerRegistry.get().add(new ScbdDescribeHandlerFactory());
     }
 
     @Override
     public void stop() {
-        System.out.println("Stopping lifecycle");
     }
 
     @Override

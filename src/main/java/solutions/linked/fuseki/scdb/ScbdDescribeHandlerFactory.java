@@ -4,11 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.sparql.ARQConstants;
 import org.apache.jena.sparql.core.describe.DescribeHandler;
 import org.apache.jena.sparql.core.describe.DescribeHandlerFactory;
 import org.apache.jena.sparql.util.Context;
@@ -21,11 +23,14 @@ public class ScbdDescribeHandlerFactory implements DescribeHandlerFactory {
 		return new DescribeHandler(){
         
             private Set<RDFNode> expanded = new HashSet<>();
-			private Model accumulateResultModel;
+            private Model accumulateResultModel;
+            private Model model;
 
             @Override
             public void start(Model accumulateResultModel, Context qContext) {
                 this.accumulateResultModel = accumulateResultModel;
+                Dataset dataset = (Dataset)qContext.get(ARQConstants.sysCurrentDataset) ;
+                this.model = dataset.getUnionModel();
             }
         
             @Override
@@ -39,7 +44,6 @@ public class ScbdDescribeHandlerFactory implements DescribeHandlerFactory {
                 } else {
                     expanded.add(rdfNode);
                 }
-                Model model = rdfNode.getModel();
                 if (rdfNode.isResource()) { 
                     StmtIterator iterator = model.listStatements(rdfNode.asResource(), null, (RDFNode) null);
                     while (iterator.hasNext()) {
